@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Measures of Location and Dispersion - Guliyeva Mahbuba</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Statistical Measures: Location and Dispersion</h1>
+            <p>Assignment prepared by: <strong>Guliyeva Mahbuba</strong></p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section>
+            <h2>1. Measures of Location (Central Tendency)</h2>
+            <p>These measures identify the central point of a data set. The most common are the Mean, Median, and Mode.</p>
+            <table id="location-table">
+                <thead>
+                    <tr>
+                        <th>Measure</th>
+                        <th>Definition</th>
+                        <th>Best Use (Advantage)</th>
+                        <th>Key Limitation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Mean</strong> ($\bar{x}$)</td>
+                        <td>The arithmetic average of all values.</td>
+                        <td>Symmetrical, non-skewed numerical data (Interval/Ratio). Uses all data.</td>
+                        <td>Highly sensitive to outliers.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Median</strong></td>
+                        <td>The middle value in an ordered set (50th percentile).</td>
+                        <td>Skewed data or data with outliers. Robust measure.</td>
+                        <td>Does not use all observations.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mode</strong></td>
+                        <td>The most frequently occurring value.</td>
+                        <td>Categorical (Nominal) data to find the most popular category.</td>
+                        <td>Can be non-existent or multiple.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2>2. Measures of Dispersion (Variability)</h2>
+            <p>These measures quantify the spread of data points from the central value, indicating consistency or variability.</p>
+            <table id="dispersion-table">
+                <thead>
+                    <tr>
+                        <th>Measure</th>
+                        <th>Definition</th>
+                        <th>Best Use (Advantage)</th>
+                        <th>Key Limitation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Range</strong></td>
+                        <td>Max value - Min value.</td>
+                        <td>Quick, initial spread assessment.</td>
+                        <td>Only uses two values; highly sensitive to outliers.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Standard Deviation</strong> ($\sigma$ or $s$)</td>
+                        <td>Square root of the Variance. Units are the same as the data.</td>
+                        <td>Used with the Mean for symmetrical data (Normal Distribution).</td>
+                        <td>Sensitive to outliers.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Interquartile Range (IQR)</strong></td>
+                        <td>$Q3 - Q1$ (Spread of the middle 50%).</td>
+                        <td>Skewed numerical data. Robust to extreme outliers.</td>
+                        <td>Ignores extreme 50% of data.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="advanced-section">
+            <h2>3. Advanced Topic: Recursive Calculation</h2>
+            <p>In data streams, calculations must be done *online* without storing the entire dataset. This utilizes **recurrence formulas**.</p>
+            <h3>Recurrence Formula for Mean</h3>
+            <pre><code>$$\bar{x}_{n+1} = \bar{x}_n + \frac{x_{n+1} - \bar{x}_n}{n+1}$$</code></pre>
+            <p>This method drastically reduces the memory and computation required for continuous updates.</p>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Guliyeva Mahbuba. Statistical Research Assignment.</p>
+        </div>
+    </footer>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+</body>
+</html>
+styles.css
+CSS
+
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    overflow: hidden;
+    padding: 20px 0;
+}
+
+header {
+    background: #3498db;
+    color: #ffffff;
+    padding-top: 30px;
+    min-height: 70px;
+    border-bottom: #2980b9 3px solid;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.2em;
+}
+
+header p {
+    font-size: 1.1em;
+    margin-bottom: 20px;
+}
+
+main {
+    padding-top: 20px;
+    padding-bottom: 40px;
+}
+
+section {
+    background: #ffffff;
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+h2 {
+    color: #2c3e50;
+    border-bottom: 2px solid #ecf0f1;
+    padding-bottom: 10px;
+    margin-top: 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+table th, table td {
+    padding: 12px 15px;
+    border: 1px solid #dddddd;
+    text-align: left;
+}
+
+table th {
+    background-color: #eaf2f8;
+    color: #34495e;
+    font-weight: bold;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.advanced-section pre {
+    background: #2c3e50;
+    color: #ecf0f1;
+    padding: 15px;
+    border-radius: 5px;
+    overflow-x: auto;
+    font-size: 1.0em;
+    border-left: 5px solid #e74c3c;
+}
+
+footer {
+    background: #34495e;
+    color: #ffffff;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 20px;
+}

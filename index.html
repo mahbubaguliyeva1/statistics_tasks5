@@ -60,6 +60,11 @@
             padding-bottom: 10px;
             margin-top: 0;
         }
+        
+        h3 {
+            color: #3498db;
+            margin-top: 15px;
+        }
 
         table {
             width: 100%;
@@ -95,7 +100,28 @@
             overflow-x: auto;
             font-size: 1.0em;
             border-left: 5px solid #e74c3c;
+            margin: 15px 0;
         }
+        
+        .practical-use-list {
+            list-style-type: none; /* Remove default bullet */
+            padding-left: 0;
+        }
+        
+        .practical-use-list li {
+            margin-bottom: 15px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .practical-use-list li::before {
+            content: '✅'; /* Custom bullet point */
+            position: absolute;
+            left: 0;
+            color: #2ecc71;
+            font-weight: bold;
+        }
+
 
         footer {
             background: #34495e;
@@ -130,7 +156,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><strong>Mean</strong> ($\bar{x}$)</td>
+                        <td><strong>Mean</strong> (\bar{x})</td>
                         <td>The arithmetic average of all values.</td>
                         <td>Symmetrical, non-skewed numerical data (Interval/Ratio). Uses all data.</td>
                         <td>Highly sensitive to outliers.</td>
@@ -171,14 +197,14 @@
                         <td>Only uses two values; highly sensitive to outliers.</td>
                     </tr>
                     <tr>
-                        <td><strong>Standard Deviation</strong> ($\sigma$ or $s$)</td>
+                        <td><strong>Standard Deviation</strong> (\sigma or s)</td>
                         <td>Square root of the Variance. Units are the same as the data.</td>
                         <td>Used with the Mean for symmetrical data (Normal Distribution).</td>
                         <td>Sensitive to outliers.</td>
                     </tr>
                     <tr>
                         <td><strong>Interquartile Range (IQR)</strong></td>
-                        <td>$Q3 - Q1$ (Spread of the middle 50%).</td>
+                        <td>Q3 - Q1 (Spread of the middle 50%).</td>
                         <td>Skewed numerical data. Robust to extreme outliers.</td>
                         <td>Ignores extreme 50% of data.</td>
                     </tr>
@@ -187,17 +213,35 @@
         </section>
 
         <section class="advanced-section">
-            <h2>3. Advanced Topic: Recursive Calculation</h2>
-            <p>In data streams, calculations must be done *online* without storing the entire dataset. This utilizes **recurrence formulas**.</p>
-            <h3>Recurrence Formula for Mean</h3>
-            <pre><code>$$\bar{x}_{n+1} = \bar{x}_n + \frac{x_{n+1} - \bar{x}_n}{n+1}$$</code></pre>
-            <p>This method drastically reduces the memory and computation required for continuous updates.</p>
+            <h2>3. Advanced Topic: Practical Use of Recursive Calculation</h2>
+            <p>Recursive (or "online") formulas are essential for real-time data processing and computational efficiency because they allow statistics to be updated incrementally as new data arrives, eliminating the need to store the entire dataset.</p>
+
+            <h3>A. Recursive Mean Formula</h3>
+            <pre><code>\bar{x}_{n+1} = \bar{x}_n + \frac{x_{n+1} - \bar{x}_n}{n+1}</code></pre>
+            <p>The term (x_{n+1} - \bar{x}_n) is the error (residual). The new mean is the old mean plus a small adjustment proportional to this error.</p>
+            
+            <h4>Practical Applications of Recursive Mean:</h4>
+            <ul class="practical-use-list">
+                <li>Financial Markets: Instantly update the average stock price with every new trade without latency.</li>
+                <li>IoT Sensor Data: Continuously calculate the running average of metrics like temperature or pressure from millions of sensors without overwhelming memory.</li>
+            </ul>
+
+            <h3>B. Recursive Sum of Squares (S_n) for Variance/Standard Deviation</h3>
+            <pre><code>S_{n+1} = S_n + (x_{n+1} - \bar{x}_{n+1})(x_{n+1} - \bar{x}_n)</code></pre>
+            <p>This formula updates the sum of squared deviations, which is the core component of variance, based on the new observation (x_{n+1}) and the old and new means.</p>
+
+            <h4>Practical Applications of Recursive Variance:</h4>
+            <ul class="practical-use-list">
+                <li>Quality Control: Real-time monitoring of variability (Standard Deviation) in manufacturing processes. An immediate increase in variance signals that the process is out of control.</li>
+                <li>Anomaly Detection: Tracking the spread of network latency or system load. A sudden change in standard deviation (even if the mean is stable) can indicate an abnormal event or a cyber threat.</li>
+                <li>Numerical Stability: This method is preferred in computational systems as it is more numerically stable and less prone to floating-point rounding errors than the traditional two-pass method when dealing with very large datasets.</li>
+            </ul>
         </section>
     </main>
 
     <footer>
         <div class="container">
-            <p>&copy; 2025 Guliyeva Mahbuba. Statistical Research Assignment.</p>
+            <p>&copy; 2025 Guliyeva Mahbuba. Statistical Research Assignment. Advanced Data Analysis Focus.</p>
         </div>
     </footer>
     <script type="text/javascript" id="MathJax-script" async

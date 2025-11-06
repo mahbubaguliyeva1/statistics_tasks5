@@ -92,15 +92,15 @@
             background-color: #f1f1f1;
         }
 
-        .advanced-section pre {
+        .formula-display { /* New class for the formula display area */
             background: #2c3e50;
             color: #ecf0f1;
             padding: 15px;
             border-radius: 5px;
             overflow-x: auto;
-            font-size: 1.0em;
             border-left: 5px solid #e74c3c;
             margin: 15px 0;
+            text-align: center;
         }
         
         .practical-use-list {
@@ -214,27 +214,31 @@
 
         <section class="advanced-section">
             <h2>3. Advanced Topic: Practical Use of Recursive Calculation</h2>
-            <p>Recursive (or "online") formulas are essential for real-time data processing and computational efficiency because they allow statistics to be updated incrementally as new data arrives, eliminating the need to store the entire dataset.</p>
+            <p>Recursive (or "online") formulas are essential for **real-time data processing** and **computational efficiency** because they allow statistics to be updated incrementally as new data arrives, eliminating the need to store the entire dataset.</p>
 
             <h3>A. Recursive Mean Formula</h3>
-            <pre><code>$$\bar{x}_{n+1} = \bar{x}_n + \frac{x_{n+1} - \bar{x}_n}{n+1}$$</code></pre>
+            <div class="formula-display">
+                $$\bar{x}_{n+1} = \bar{x}_n + \frac{x_{n+1} - \bar{x}_n}{n+1}$$
+            </div>
             <p>The term $(x_{n+1} - \bar{x}_n)$ is the error (residual). The new mean $\bar{x}_{n+1}$ is the old mean $\bar{x}_n$ plus a small adjustment proportional to this error.</p>
             
             <h4>Practical Applications of Recursive Mean:</h4>
             <ul class="practical-use-list">
-                <li>Financial Markets: Instantly update the average stock price with every new trade without latency.</li>
-                <li>IoT Sensor Data: Continuously calculate the running average of metrics like temperature or pressure from millions of sensors without overwhelming memory.</li>
+                <li>**Financial Markets:** Instantly update the average stock price with every new trade without latency.</li>
+                <li>**IoT Sensor Data:** Continuously calculate the running average of metrics like temperature or pressure from millions of sensors without overwhelming memory.</li>
             </ul>
 
             <h3>B. Recursive Sum of Squares ($S_n$) for Variance/Standard Deviation</h3>
-            <pre><code>$$S_{n+1} = S_n + (x_{n+1} - \bar{x}_{n+1})(x_{n+1} - \bar{x}_n)$$</code></pre>
-            <p>This formula updates the Sum of Squared Differences ($S_n$), which is the core component of variance. $S_{n+1}$ represents the sum of squares after $n+1$ observations, correctly building upon $S_n$, the sum after $n$ observations.</p>
+            <div class="formula-display">
+                $$S_{n+1} = S_n + (x_{n+1} - \bar{x}_{n+1})(x_{n+1} - \bar{x}_n)$$
+            </div>
+            <p>This formula updates the **Sum of Squared Differences** ($S_n$), which is the core component of variance. $S_{n+1}$ represents the sum of squares after $n+1$ observations, correctly building upon $S_n$, the sum after $n$ observations.</p>
 
             <h4>Practical Applications of Recursive Variance:</h4>
             <ul class="practical-use-list">
-                <li>Quality Control: Real-time monitoring of variability (Standard Deviation) in manufacturing processes. An immediate increase in variance signals that the process is out of control.</li>
-                <li>Anomaly Detection: Tracking the spread of network latency or system load. A sudden change in standard deviation (even if the mean is stable) can indicate an abnormal event or a cyber threat.</li>
-                <li>Numerical Stability: This method is preferred in computational systems as it is more numerically stable and less prone to floating-point rounding errors than the traditional two-pass method when dealing with very large datasets.</li>
+                <li>**Quality Control:** Real-time monitoring of variability (Standard Deviation) in manufacturing processes. An immediate increase in variance signals that the process is out of control.</li>
+                <li>**Anomaly Detection:** Tracking the spread of network latency or system load. A sudden change in standard deviation (even if the mean is stable) can indicate an abnormal event or a cyber threat.</li>
+                <li>**Numerical Stability:** This method is preferred in computational systems as it is more numerically stable and less prone to floating-point rounding errors than the traditional two-pass method when dealing with very large datasets.</li>
             </ul>
         </section>
     </main>

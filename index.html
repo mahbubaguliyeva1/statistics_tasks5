@@ -1,255 +1,446 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Measures of Location and Dispersion - Guliyeva Mahbuba</title>
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-            color: #333;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: auto;
-            overflow: hidden;
-            padding: 20px 0;
-        }
-
-        header {
-            background: #3498db;
-            color: #ffffff;
-            padding-top: 30px;
-            min-height: 70px;
-            border-bottom: #2980b9 3px solid;
-            text-align: center;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 2.2em;
-        }
-
-        header p {
-            font-size: 1.1em;
-            margin-bottom: 20px;
-        }
-
-        main {
-            padding-top: 20px;
-            padding-bottom: 40px;
-        }
-
-        section {
-            background: #ffffff;
-            padding: 20px;
-            margin-bottom: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-
-        h2 {
-            color: #2c3e50;
-            border-bottom: 2px solid #ecf0f1;
-            padding-bottom: 10px;
-            margin-top: 0;
-        }
-        
-        h3 {
-            color: #3498db;
-            margin-top: 15px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-        }
-
-        table th, table td {
-            padding: 12px 15px;
-            border: 1px solid #dddddd;
-            text-align: left;
-        }
-
-        table th {
-            background-color: #eaf2f8;
-            color: #34495e;
-            font-weight: bold;
-        }
-
-        table tbody tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
-        table tbody tr:hover {
-            background-color: #f1f1f1;
-        }
-
-        .formula-display {
-            background: #2c3e50;
-            color: #ecf0f1;
-            padding: 15px;
-            border-radius: 5px;
-            overflow-x: auto;
-            border-left: 5px solid #e74c3c;
-            margin: 15px 0;
-            text-align: center;
-        }
-        
-        .practical-use-list {
-            list-style-type: none;
-            padding-left: 0;
-        }
-        
-        .practical-use-list li {
-            margin-bottom: 15px;
-            padding-left: 20px;
-            position: relative;
-        }
-        
-        .practical-use-list li::before {
-            content: '✅';
-            position: absolute;
-            left: 0;
-            color: #2ecc71;
-            font-weight: bold;
-        }
-
-
-        footer {
-            background: #34495e;
-            color: #ffffff;
-            text-align: center;
-            padding: 10px 0;
-            margin-top: 20px;
-        }
-    </style>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Location & Dispersion — Measures Demo</title>
+  <meta name="description" content="Research & demo: measures of location (mean, median, mode) and dispersion (variance, std, IQR). Includes recurrence formulas and example code."/>
+  <style>
+    :root{
+      --bg:#f6f8fb; --card:#ffffff; --muted:#6b7280; --accent:#0ea5a4; --accent-2:#0369a1;
+      --radius:12px; --maxw:1100px;
+    }
+    *{box-sizing:border-box}
+    body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial; margin:0; background:var(--bg); color:#07203a; line-height:1.45;}
+    .container{max-width:var(--maxw); margin:28px auto; padding:20px;}
+    header{display:flex; gap:18px; align-items:center; margin-bottom:18px;}
+    header h1{margin:0;font-size:20px}
+    header p{margin:0;color:var(--muted)}
+    .grid{display:grid; grid-template-columns:320px 1fr; gap:18px;}
+    .card{background:var(--card); border-radius:var(--radius); padding:14px; box-shadow:0 6px 18px rgba(12,14,20,0.06);}
+    .left .card + .card{margin-top:12px}
+    .small{font-size:13px;color:var(--muted)}
+    textarea,input{width:100%; padding:8px; border-radius:8px; border:1px solid #e6eef2; font-size:14px}
+    button{background:var(--accent); color:white; border:none; padding:8px 10px; border-radius:8px; cursor:pointer}
+    button.ghost{background:transparent; color:var(--accent-2); border:1px solid rgba(3,105,161,0.08)}
+    .section-title{display:flex; justify-content:space-between; align-items:center}
+    pre.code{background:#0f172a; color:#e6fff9; padding:12px; border-radius:8px; overflow:auto; font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace}
+    table{width:100%; border-collapse:collapse}
+    table td, table th{padding:6px 8px; border-bottom:1px solid #f0f4f7; font-size:14px}
+    .result{background:#f8fffe;border-radius:8px;padding:10px;border:1px solid #e6f6f5;margin-top:8px}
+    @media (max-width:960px){ .grid{grid-template-columns:1fr} header{flex-direction:column;align-items:flex-start}}
+    .note{font-size:13px;color:var(--muted)}
+    .controls{display:flex;gap:8px; margin-top:8px}
+    .explain{font-size:14px; color:#0b1722}
+    .badge{display:inline-block;background:#eefaf9;color:#036b63;padding:6px 8px;border-radius:999px;font-weight:600;font-size:13px}
+  </style>
 </head>
 <body>
+  <div class="container">
     <header>
-        <div class="container">
-            <h1>Statistical Measures: Location and Dispersion</h1>
-            <p>Assignment prepared by: <strong>Guliyeva Mahbuba</strong></p>
-        </div>
+      <div>
+        <h1>Location & Dispersion — Measures Research & Demo</h1>
+        <p class="small">Mean, Median, Mode, Variance, Standard Deviation, IQR — theory, uses, limitations, and interactive recurrence demo.</p>
+      </div>
+      <div style="margin-left:auto; text-align:right">
+        <div class="badge">Ready for GitHub Pages</div>
+      </div>
     </header>
 
-    <main class="container">
-        <section>
-            <h2>1. Measures of Location (Central Tendency)</h2>
-            <p>These measures identify the central point of a data set. The most common are the Mean, Median, and Mode.</p>
-            <table id="location-table">
-                <thead>
-                    <tr>
-                        <th>Measure</th>
-                        <th>Definition</th>
-                        <th>Best Use (Advantage)</th>
-                        <th>Key Limitation</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Mean</strong> ($\bar{x}$)</td>
-                        <td>The arithmetic average of all values.</td>
-                        <td>Symmetrical, non-skewed numerical data (Interval/Ratio). Uses all data.</td>
-                        <td>Highly sensitive to outliers.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Median</strong></td>
-                        <td>The middle value in an ordered set (50th percentile).</td>
-                        <td>Skewed data or data with outliers. Robust measure.</td>
-                        <td>Does not use all observations.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Mode</strong></td>
-                        <td>The most frequently occurring value.</td>
-                        <td>Categorical (Nominal) data to find the most popular category.</td>
-                        <td>Can be non-existent or multiple.</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-
-        <section>
-            <h2>2. Measures of Dispersion (Variability)</h2>
-            <p>These measures quantify the spread of data points from the central value, indicating consistency or variability.</p>
-            <table id="dispersion-table">
-                <thead>
-                    <tr>
-                        <th>Measure</th>
-                        <th>Definition</th>
-                        <th>Best Use (Advantage)</th>
-                        <th>Key Limitation</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Range</strong></td>
-                        <td>Max value - Min value.</td>
-                        <td>Quick, initial spread assessment.</td>
-                        <td>Only uses two values; highly sensitive to outliers.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Standard Deviation</strong> ($\sigma$ or $s$)</td>
-                        <td>Square root of the Variance. Units are the same as the data.</td>
-                        <td>Used with the Mean for symmetrical data (Normal Distribution).</td>
-                        <td>Sensitive to outliers.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Interquartile Range (IQR)</strong></td>
-                        <td>$Q3 - Q1$ (Spread of the middle 50%).</td>
-                        <td>Skewed numerical data. Robust to extreme outliers.</td>
-                        <td>Ignores extreme 50% of data.</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-
-        <section class="advanced-section">
-            <h2>3. Advanced Topic: Practical Use of Recursive Calculation</h2>
-            <p>Recursive (or "online") formulas are essential for real-time data processing and computational efficiency because they allow statistics to be updated incrementally as new data arrives, eliminating the need to store the entire dataset.</p>
-
-            <h3>A. Recursive Mean Formula</h3>
-            <div class="formula-display">
-                $$\bar{x}_{n+1} = \bar{x}_n + \frac{x_{n+1} - \bar{x}_n}{n+1}$$
-            </div>
-            <p>The term $(x_{n+1} - \bar{x}_n)$ is the error (residual). The new mean $\bar{x}_{n+1}$ is the old mean $\bar{x}_n$ plus a small adjustment proportional to this error.</p>
-            
-            <h4>Practical Applications of Recursive Mean:</h4>
-            <ul class="practical-use-list">
-                <li>Financial Markets: Instantly update the average stock price with every new trade without latency.</li>
-                <li>IoT Sensor Data: Continuously calculate the running average of metrics like temperature or pressure from millions of sensors without overwhelming memory.</li>
-            </ul>
-
-            <h3>B. Recursive Sum of Squares ($S_n$) for Variance/Standard Deviation</h3>
-            <div class="formula-display">
-                $$S_{n+1} = S_n + (x_{n+1} - \bar{x}_{n+1})(x_{n+1} - \bar{x}_n)$$
-            </div>
-            <p>This formula updates the Sum of Squared Differences ($S_n$), which is the core component of variance. $S_{n+1}$ represents the sum of squares after $n+1$ observations, correctly building upon $S_n$, the sum after $n$ observations.</p>
-
-            <h4>Practical Applications of Recursive Variance:</h4>
-            <ul class="practical-use-list">
-                <li>Quality Control: Real-time monitoring of variability (Standard Deviation) in manufacturing processes. An immediate increase in variance signals that the process is out of control.</li>
-                <li>Anomaly Detection: Tracking the spread of network latency or system load. A sudden change in standard deviation (even if the mean is stable) can indicate an abnormal event or a cyber threat.</li>
-                <li>Numerical Stability: This method is preferred in computational systems as it is more numerically stable and less prone to floating-point rounding errors than the traditional two-pass method when dealing with very large datasets.</li>
-            </ul>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 Guliyeva Mahbuba. Statistical Research Assignment. Advanced Data Analysis Focus.</p>
+    <div class="grid">
+      <!-- LEFT column: controls -->
+      <div class="left">
+        <div class="card">
+          <div class="section-title"><strong>Dataset</strong><span class="small">paste or upload</span></div>
+          <p class="small">Enter numbers separated by commas, spaces, or new lines.</p>
+          <textarea id="dataInput" placeholder="e.g. 5, 7, 4, 9, 10" rows="6"></textarea>
+          <div class="controls">
+            <button id="analyzeBtn">Analyze</button>
+            <button id="loadExample" class="ghost">Load Example</button>
+          </div>
+          <div style="margin-top:10px;">
+            <label class="small">Upload CSV (first column used)</label>
+            <input id="fileInput" type="file" accept=".csv,.txt"/>
+          </div>
         </div>
+
+        <div class="card" style="margin-top:12px;">
+          <strong>Incremental (recurrence) demo</strong>
+          <p class="small">Show incremental updates as we feed new values — demonstrates recurrence formulas (mean & variance).</p>
+          <div style="display:flex; gap:8px; margin-top:8px;">
+            <input id="nextValue" placeholder="next value (e.g. 12)" />
+            <button id="pushBtn" class="ghost">Push</button>
+          </div>
+          <div class="result" id="incrementalBox">
+            <div><strong>n:</strong> <span id="nVal">0</span></div>
+            <div><strong>Mean (M):</strong> <span id="meanVal">—</span></div>
+            <div><strong>M2 (sum squares):</strong> <span id="m2Val">—</span></div>
+            <div><strong>Sample variance (s²):</strong> <span id="varVal">—</span></div>
+          </div>
+          <p class="note" style="margin-top:10px">Algorithm: Welford's online algorithm.
+          <br><small class="small">Formulas:</small>
+          <pre class="small" style="background:transparent;padding:0;margin:6px 0 0 0">M_n = M_{n-1} + (x_n - M_{n-1})/n
+S_n = S_{n-1} + (x_n - M_{n-1})(x_n - M_n)
+s^2 = S_n/(n-1)</pre></p>
+        </div>
+
+        <div class="card" style="margin-top:12px;">
+          <strong>Download / Copy</strong>
+          <div style="display:flex; gap:8px; margin-top:8px;">
+            <button id="downloadReport">Download Report (HTML)</button>
+            <button id="copyReport" class="ghost">Copy Summary</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT column: results & explanations -->
+      <div>
+        <div class="card">
+          <h3>Quick results</h3>
+          <div id="resultsArea">
+            <p class="note">No dataset analyzed yet.</p>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:12px;">
+          <h3>Measures: definitions, uses & limitations</h3>
+          <div class="explain">
+            <h4>Location / Central tendency</h4>
+            <ul>
+              <li><strong>Arithmetic mean</strong> — sum divided by n. Use when data are symmetric and without heavy outliers. Efficient estimator of expectation but sensitive to outliers.</li>
+              <li><strong>Median</strong> — middle value (or average of two middles). Robust to outliers; use for skewed distributions or income-like data.</li>
+              <li><strong>Mode</strong> — most frequent value. Useful for categorical data or multimodal distributions; may be undefined or non-unique.</li>
+            </ul>
+
+            <h4>Dispersion</h4>
+            <ul>
+              <li><strong>Variance</strong> — average squared deviation from mean. Good for analytic work and properties (additivity); units are squared, sensitive to outliers.</li>
+              <li><strong>Standard deviation (SD)</strong> — square root of variance; same units as data. Commonly reported with the mean.</li>
+              <li><strong>Interquartile range (IQR)</strong> — difference between Q3 and Q1. Robust measure of spread for skewed data or when outliers exist.</li>
+            </ul>
+
+            <h4>When to use which</h4>
+            <ul>
+              <li>Use <strong>mean & SD</strong> for symmetric, roughly normal data and when you want algebraic properties (population sums, variance decomposition).</li>
+              <li>Use <strong>median & IQR</strong> for skewed distributions or datasets with outliers (e.g., household income, reaction times).</li>
+              <li>Use <strong>mode</strong> for categorical variables or to identify peaks in multimodal distributions.</li>
+            </ul>
+
+            <h4>Advantages & limitations (short)</h4>
+            <table>
+              <thead><tr><th>Measure</th><th>Advantages</th><th>Limitations</th></tr></thead>
+              <tbody>
+                <tr><td>Mean</td><td>Efficient, widely used, analytic</td><td>Non-robust to outliers</td></tr>
+                <tr><td>Median</td><td>Robust, easy to interpret</td><td>Loses information (not additive)</td></tr>
+                <tr><td>Variance/SD</td><td>Mathematically convenient (ANOVA, regression)</td><td>Units squared/ sensitive to outliers</td></tr>
+                <tr><td>IQR</td><td>Robust measure of spread</td><td>Ignores tails</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:12px;">
+          <h3>Recurrence formulas & example code</h3>
+          <p class="small">Below is the incremental algorithm (Welford) and a batch version for reference.</p>
+          <h4>JavaScript — Welford (incremental)</h4>
+          <pre class="code" id="welfordCode">
+// Welford's algorithm (incremental)
+class Welford {
+  constructor(){
+    this.n = 0;
+    this.mean = 0;
+    this.M2 = 0; // sum of squares of differences
+  }
+  push(x){
+    this.n += 1;
+    const delta = x - this.mean;
+    this.mean += delta / this.n;
+    this.M2 += delta * (x - this.mean);
+  }
+  varianceSample(){
+    return this.n > 1 ? (this.M2 / (this.n - 1)) : 0;
+  }
+  variancePopulation(){
+    return this.n > 0 ? (this.M2 / this.n) : 0;
+  }
+}
+          </pre>
+
+          <h4>JavaScript — batch functions (mean, median, mode, variance, std, IQR)</h4>
+          <pre class="code" id="batchCode">
+// batch summary functions
+function mean(arr){ return arr.reduce((a,b)=>a+b,0)/arr.length; }
+function varianceSample(arr){
+  const m = mean(arr);
+  return arr.reduce((s,x)=>s + (x - m)*(x - m), 0) / (arr.length - 1);
+}
+function sd(arr){ return Math.sqrt(varianceSample(arr)); }
+function median(arr){
+  const a = [...arr].sort((x,y)=>x-y);
+  const mid = Math.floor((a.length-1)/2);
+  return (a.length%2===1) ? a[mid] : (a[mid]+a[mid+1])/2;
+}
+function mode(arr){
+  const counts = new Map();
+  arr.forEach(v=>counts.set(v, (counts.get(v)||0)+1));
+  let maxc = 0, vals=[];
+  counts.forEach((c,v)=>{
+    if(c>maxc){ maxc=c; vals=[v]; }
+    else if(c===maxc){ vals.push(v); }
+  });
+  return vals;
+}
+function iqr(arr){
+  const a = [...arr].sort((x,y)=>x-y);
+  const q1 = quantile(a, 0.25);
+  const q3 = quantile(a, 0.75);
+  return q3 - q1;
+}
+function quantile(sorted, p){
+  if(sorted.length===0) return null;
+  const pos = (sorted.length - 1) * p;
+  const lower = Math.floor(pos), upper = Math.ceil(pos);
+  if(lower === upper) return sorted[lower];
+  return sorted[lower] * (upper-pos) + sorted[upper] * (pos-lower);
+}
+          </pre>
+        </div>
+
+        <div class="card" style="margin-top:12px;">
+          <h3>Practical exercises / real-world practice</h3>
+          <ol>
+            <li>Compute mean, median, sd, and IQR for a dataset of incomes: discuss which measures are best and why.</li>
+            <li>Simulate adding outliers to a dataset and watch how mean and SD change vs median and IQR.</li>
+            <li>Implement Welford to compute streaming statistics and compare results with batch methods.</li>
+            <li>Apply the measures to categorical data: report mode and frequency table.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <footer style="margin-top:18px; text-align:center; color:var(--muted)">
+      Built for your class — derive recurrence formulas & submit the code. — <small>Deploy via GitHub Pages</small>
     </footer>
-    <script type="text/javascript" id="MathJax-script" async
-        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-    </script>
+  </div>
+
+  <script>
+    // --- Utility parsing and summary functions ---
+    function parseNumbers(text){
+      if(!text) return [];
+      // split by comma, newline, whitespace
+      const tokens = text.split(/[,\\n\\s]+/).filter(Boolean);
+      const nums = tokens.map(t => {
+        const v = Number(t);
+        return Number.isFinite(v) ? v : NaN;
+      }).filter(v => !Number.isNaN(v));
+      return nums;
+    }
+
+    // batch functions (kept in sync w/ page code)
+    function mean(arr){ return arr.reduce((a,b)=>a+b,0)/arr.length; }
+    function varianceSample(arr){
+      if(arr.length < 2) return 0;
+      const m = mean(arr);
+      return arr.reduce((s,x)=>s + (x - m)*(x - m), 0) / (arr.length - 1);
+    }
+    function sd(arr){ return Math.sqrt(varianceSample(arr)); }
+    function median(arr){
+      const a = [...arr].sort((x,y)=>x-y);
+      const mid = Math.floor((a.length-1)/2);
+      return (a.length%2===1) ? a[mid] : (a[mid]+a[mid+1])/2;
+    }
+    function mode(arr){
+      const counts = new Map();
+      arr.forEach(v=>counts.set(v, (counts.get(v)||0)+1));
+      let maxc = 0, vals=[];
+      counts.forEach((c,v)=>{
+        if(c>maxc){ maxc=c; vals=[v]; }
+        else if(c===maxc){ vals.push(v); }
+      });
+      return vals;
+    }
+    function quantile(sorted, p){
+      if(sorted.length===0) return null;
+      const pos = (sorted.length - 1) * p;
+      const lower = Math.floor(pos), upper = Math.ceil(pos);
+      if(lower === upper) return sorted[lower];
+      return sorted[lower] * (upper-pos) + sorted[upper] * (pos-lower);
+    }
+    function iqr(arr){
+      const a = [...arr].sort((x,y)=>x-y);
+      return quantile(a,0.75) - quantile(a,0.25);
+    }
+
+    // --- UI wiring ---
+    const dataInput = document.getElementById('dataInput');
+    const analyzeBtn = document.getElementById('analyzeBtn');
+    const loadExample = document.getElementById('loadExample');
+    const resultsArea = document.getElementById('resultsArea');
+    const fileInput = document.getElementById('fileInput');
+
+    analyzeBtn.addEventListener('click', ()=> {
+      const arr = parseNumbers(dataInput.value);
+      renderResults(arr);
+    });
+    loadExample.addEventListener('click', ()=> {
+      const example = "8, 6, 7, 5, 3, 10, 12, 4, 7";
+      dataInput.value = example;
+      renderResults(parseNumbers(example));
+    });
+    fileInput.addEventListener('change', (e)=>{
+      const f = e.target.files[0];
+      if(!f) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        // try parse CSV first column
+        const text = reader.result;
+        // simple CSV parse: split lines, take first column tokens
+        const lines = text.split(/\\r?\\n/).filter(Boolean);
+        const tokens = lines.map(l => l.split(',')[0]).join(' ');
+        dataInput.value = tokens;
+        renderResults(parseNumbers(tokens));
+      };
+      reader.readAsText(f);
+    });
+
+    function renderResults(arr){
+      if(!arr || arr.length===0){
+        resultsArea.innerHTML = '<p class="note">No numeric values found.</p>';
+        return;
+      }
+      const m = mean(arr);
+      const med = median(arr);
+      const md = mode(arr);
+      const varS = varianceSample(arr);
+      const sdv = sd(arr);
+      const i = iqr(arr);
+      const html = `
+        <table>
+          <tr><th>n</th><td>${arr.length}</td></tr>
+          <tr><th>Mean</th><td>${m.toFixed(4)}</td></tr>
+          <tr><th>Median</th><td>${med}</td></tr>
+          <tr><th>Mode</th><td>${md.join(', ')}</td></tr>
+          <tr><th>Sample variance (s²)</th><td>${varS.toFixed(4)}</td></tr>
+          <tr><th>Standard deviation (s)</th><td>${sdv.toFixed(4)}</td></tr>
+          <tr><th>IQR</th><td>${i.toFixed(4)}</td></tr>
+        </table>
+        <p class="small" style="margin-top:10px">Summary: mean is sensitive to outliers; median and IQR are robust. Use appropriate measure depending on data shape and purpose.</p>
+      `;
+      resultsArea.innerHTML = html;
+    }
+
+    // --- Incremental (Welford) demo wiring ---
+    class Welford {
+      constructor(){ this.n=0; this.mean=0; this.M2=0; }
+      push(x){
+        this.n += 1;
+        const delta = x - this.mean;
+        this.mean += delta / this.n;
+        this.M2 += delta * (x - this.mean);
+      }
+      varianceSample(){ return this.n>1 ? (this.M2/(this.n-1)) : 0; }
+      variancePopulation(){ return this.n>0 ? (this.M2/this.n) : 0; }
+    }
+    const wf = new Welford();
+    const nVal = document.getElementById('nVal');
+    const meanVal = document.getElementById('meanVal');
+    const m2Val = document.getElementById('m2Val');
+    const varVal = document.getElementById('varVal');
+    const pushBtn = document.getElementById('pushBtn');
+    const nextValue = document.getElementById('nextValue');
+
+    function updateIncrementalDisplay(){
+      nVal.textContent = wf.n;
+      meanVal.textContent = (wf.n>0) ? wf.mean.toFixed(6) : '—';
+      m2Val.textContent = (wf.n>0) ? wf.M2.toFixed(6) : '—';
+      varVal.textContent = (wf.n>1) ? wf.varianceSample().toFixed(6) : '—';
+    }
+
+    pushBtn.addEventListener('click', ()=>{
+      const raw = nextValue.value.trim();
+      if(raw==='') return;
+      const v = Number(raw);
+      if(!Number.isFinite(v)){ alert('Enter a finite number'); return; }
+      wf.push(v);
+      updateIncrementalDisplay();
+      nextValue.value = '';
+    });
+
+    // Allow pushing many values at once from data input
+    document.getElementById('analyzeBtn').addEventListener('click', ()=>{
+      const arr = parseNumbers(dataInput.value);
+      // reset incremental wf for demo
+      // (optional) push each value to wf for demo
+      // Here we will not automatically push to preserve the incremental demo as manual
+    });
+
+    // --- Download / Copy report ---
+    const downloadReport = document.getElementById('downloadReport');
+    const copyReport = document.getElementById('copyReport');
+
+    downloadReport.addEventListener('click', ()=> {
+      const arr = parseNumbers(dataInput.value);
+      const summary = buildReportHTML(arr);
+      const blob = new Blob([summary], {type:'text/html'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = 'location_dispersion_report.html'; a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    copyReport.addEventListener('click', ()=>{
+      const arr = parseNumbers(dataInput.value);
+      const txt = buildReportText(arr);
+      navigator.clipboard.writeText(txt).then(()=> alert('Summary copied to clipboard'));
+    });
+
+    function buildReportHTML(arr){
+      const date = new Date().toLocaleString();
+      const m = arr.length ? mean(arr).toFixed(6) : '—';
+      const med = arr.length ? median(arr) : '—';
+      const md = arr.length ? mode(arr).join(', ') : '—';
+      const varS = arr.length ? varianceSample(arr).toFixed(6) : '—';
+      const sdv = arr.length ? sd(arr).toFixed(6) : '—';
+      const i = arr.length ? iqr(arr).toFixed(6) : '—';
+      return `<!doctype html><html><head><meta charset="utf-8"><title>Report</title></head><body><h1>Location & Dispersion Report</h1>
+        <p>Generated: ${date}</p>
+        <p><strong>Data:</strong> ${arr.join(', ')}</p>
+        <ul>
+          <li>Mean: ${m}</li>
+          <li>Median: ${med}</li>
+          <li>Mode: ${md}</li>
+          <li>Sample variance (s²): ${varS}</li>
+          <li>Standard deviation: ${sdv}</li>
+          <li>IQR: ${i}</li>
+        </ul>
+        <p>Notes: mean/variance are sensitive to outliers; median/IQR are robust for skewed data.</p>
+        </body></html>`;
+    }
+
+    function buildReportText(arr){
+      const date = new Date().toLocaleString();
+      const m = arr.length ? mean(arr).toFixed(6) : '—';
+      const med = arr.length ? median(arr) : '—';
+      const md = arr.length ? mode(arr).join(', ') : '—';
+      const varS = arr.length ? varianceSample(arr).toFixed(6) : '—';
+      const sdv = arr.length ? sd(arr).toFixed(6) : '—';
+      const i = arr.length ? iqr(arr).toFixed(6) : '—';
+      return `Location & Dispersion Report (${date})
+Data: ${arr.join(', ')}
+
+Mean: ${m}
+Median: ${med}
+Mode: ${md}
+Sample variance (s^2): ${varS}
+Standard deviation: ${sdv}
+IQR: ${i}
+
+Notes: mean and variance are sensitive to outliers; median and IQR are robust for skewed data.
+`;
+    }
+
+    // Initialize example
+    loadExample.click();
+  </script>
 </body>
 </html>
+
